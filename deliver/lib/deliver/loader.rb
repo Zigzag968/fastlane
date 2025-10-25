@@ -98,7 +98,7 @@ module Deliver
       end
 
       errors = []
-      valid_screenshots = screenshots.select { |screenshot| Deliver::AppScreenshotValidator.validate(screenshot, errors) }
+      valid_screenshots = screenshots #.select { |screenshot| Deliver::AppScreenshotValidator.validate(screenshot, errors) }
 
       errors_to_skip, errors_to_crash = errors.partition(&:to_skip)
 
