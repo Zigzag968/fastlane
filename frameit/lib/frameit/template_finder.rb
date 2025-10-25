@@ -29,6 +29,16 @@ module Frameit
           UI.error("Looked for: '#{filename}.png'")
         else
           UI.error("Couldn't find template for screenshot type '#{filename}'")
+          # Provide more actionable logging so users know which exact files are missing
+          templates_path = FrameDownloader.templates_path
+          tried = [File.join(templates_path, "#{filename}.png"), File.join(templates_path, "#{filename}.jpg")]
+          UI.error("Searched for the following template files:")
+          tried.each { |p| UI.error("  - #{p}") }
+          UI.error("Screenshot: #{screenshot.path}")
+          # Indicate expected orientation based on detected screenshot orientation
+          orient = screenshot.orientation_name == Orientation::PORTRAIT ? 'portrait' : 'landscape'
+          UI.error("Expected orientation: #{orient}")
+          UI.error("Template folder: #{templates_path}")
           UI.error("Please run `fastlane frameit download_frames` to download the latest frames")
         end
         return nil

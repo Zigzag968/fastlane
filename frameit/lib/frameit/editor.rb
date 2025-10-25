@@ -110,7 +110,16 @@ module Frameit
       end
 
       # Apply rounded corners for all iPhone 14 devices
-      if screenshot.device.id.to_s.include?("iphone-14") || screenshot.device.id.to_s.include?("iphone14")
+  # Apply rounded corners for iPhone devices. Previously this only
+  # targeted iPhone 14 (hardcoded); generalize so newer iPhones (17, etc.)
+  # also get rounded masks.
+  if screenshot.device && (screenshot.device.id.to_s.include?("iphone") || screenshot.device.formatted_name.to_s.include?("iPhone"))
+        # Log sizes before mask creation
+    begin
+      UI.verbose("[mask] screenshot.size=#{screenshot.size.inspect}")
+      UI.verbose("[mask] image.size=#{@image.width}x#{@image.height}")
+    rescue StandardError
+    end
 
         maskData = MiniMagick::Tool::Convert.new do |img|
           img.size("#{screenshot.size[0]}x#{screenshot.size[1]}")
@@ -121,18 +130,27 @@ module Frameit
 
         # Create a mask
         mask = MiniMagick::Image.read(maskData)
+  UI.verbose("[mask] generated mask size=#{mask.width}x#{mask.height}")
 
         @image = @image.composite(mask, "png") do |c|
           c.channel("A")
           c.compose("DstIn")
           c.alpha("on")
         end
+
+        # After mask composite, log image size again
+        begin
+          UI.verbose("[mask] image after mask composite=#{@image.width}x#{@image.height}")
+        rescue StandardError
+        end
       end
 
+  UI.verbose("[composite] frame.size=#{frame.width}x#{frame.height}, image.size=#{@image.width}x#{@image.height}, offset=#{offset['offset']}")
       @image = frame.composite(image, "png") do |c|
         c.compose("DstOver")
         c.geometry(offset['offset'])
       end
+  UI.verbose("[composite] result image size=#{@image.width}x#{@image.height}")
 
       # Revert the rotation from above
       frame.rotate(rotation)
@@ -189,6 +207,10 @@ module Frameit
         # Decrease the size of the framed screenshot to fit into the defined padding + background
         frame_width = background.width - horizontal_frame_padding * 2
         frame_height = background.height - effective_text_height - vertical_frame_padding
+
+        # frame_height is used to constrain the screenshot area inside the
+        # background. Keep original behavior (no forced capping) so that
+        # offsets and config determine layout.
 
         if @config['show_complete_frame']
           # calculate the final size of the screenshot to resize in one go
@@ -408,6 +430,18 @@ module Frameit
     def actual_font_size(key)
       font_size = @config[key.to_s]['font_size']
       return font_size if !font_size.nil? && font_size > 0
+
+      # For iPad screenshots, use fixed font sizes to avoid the title/keyword
+      # pushing the device too far down. These are sensible defaults which
+      # can still be overridden via Framefile.json by setting
+      # title.font_size / keyword.font_size.
+      begin
+        if !@screenshot.nil? && @screenshot.device && @screenshot.device.formatted_name.to_s.include?("iPad")
+          return 50 if key.to_s == 'title'
+          return 30 if key.to_s == 'keyword'
+        end
+      rescue StandardError
+      end
 
       font_scale_factor = @config['font_scale_factor'] || 0.1
       UI.user_error!("Parameter 'font_scale_factor' cannot be 0. Please provide a value larger than 0.0 (default = 0.1).") if font_scale_factor == 0.0
