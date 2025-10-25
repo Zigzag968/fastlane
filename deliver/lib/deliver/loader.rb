@@ -113,6 +113,8 @@ module Deliver
         UI.user_error!("Canceled uploading screenshots. Please check the error messages above and fix the screenshots.")
       end
 
+       UI.important("🏃 #{valid_screenshots.count} screenshots are valid!")
+
       valid_screenshots
     end
 

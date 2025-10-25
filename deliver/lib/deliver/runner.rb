@@ -140,6 +140,8 @@ module Deliver
 
       # First, collect all the things for the HTML Report
       screenshots = upload_screenshots.collect_screenshots(options)
+      UI.important("🏃 Detected #{screenshots.count} screenshots for upload")
+      
       upload_metadata.load_from_filesystem
 
       # Assign "default" values to all languages

@@ -55,6 +55,8 @@ module Deliver
         localizations = version.get_app_store_version_localizations
       end
 
+      UI.verbose("Screenshots per language: #{screenshots_per_language.map { |lang, shots| "#{lang}: #{shots.count}" }.join(', ')}")
+
       upload_screenshots(localizations, screenshots_per_language, options[:screenshot_processing_timeout])
 
       Helper.show_loading_indicator("Sorting screenshots uploaded...")
