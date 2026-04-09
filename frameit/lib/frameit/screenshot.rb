@@ -41,8 +41,11 @@ module Frameit
       #     to Screenshot's constructor as config, i.e. we call config[key])
       #   - should have the highest priority, because user might set a specific value for a specific screenshot which
       #     should override CLI parameters and fastfile global setting
+      # Be defensive: allow nil config (treat as empty hash)
+      config ||= {}
+
       platform = config['use_platform'] || platform_command || Frameit.config[:use_platform]
-      @device = Device.find_device_by_id_or_name(config['force_device_type'] || Frameit.config[:force_device_type]) || Device.detect_device(path, platform)
+      @device = Device.find_device_by_id_or_name((config && config['force_device_type']) || Frameit.config[:force_device_type]) || Device.detect_device(path, platform)
     end
 
     # Device name for a given screen size. Used to use the correct template

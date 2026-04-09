@@ -51,6 +51,7 @@ module Frameit
     SILVER_TITANIUM ||= "Silver Titanium"
     ARCTIC_SILVER ||= "Arctic Silver"
     CORAL_BLUE ||= "Coral Blue"
+    DEEP_BLUE ||= "Deep Blue"
     MAPLE_GOLD ||= "Maple Gold"
     MIDNIGHT_BLACK ||= "Midnight Black"
     MIDNIGHT_GREEN ||= "Midnight Green"
@@ -175,6 +176,7 @@ module Frameit
     IPHONE_14_PLUS ||= Device.new("iphone-14-plus", "Apple iPhone 14 Plus", 12, [[1284, 2778], [2778, 1284]], 458, Color::MIDNIGHT, Platform::IOS)
     IPHONE_14_PRO ||= Device.new("iphone-14-pro", "Apple iPhone 14 Pro", 12, [[1179, 2556], [2556, 1179]], 460, Color::BLACK, Platform::IOS)
     IPHONE_14_PRO_MAX ||= Device.new("iphone14-pro-max", "Apple iPhone 14 Pro Max", 12, [[1290, 2796], [2796, 1290]], 458, Color::BLACK, Platform::IOS)
+    IPHONE_17_PRO_MAX ||= Device.new("iphone-17-pro-max", "Apple iPhone 17 Pro Max", 13, [[1320, 2868], [2868, 1320]], 458, Color::DEEP_BLUE, Platform::IOS)
     IPAD_10_2 ||= Device.new("ipad-10-2", "Apple iPad 10.2", 1, [[1620, 2160], [2160, 1620]], 264, Color::SPACE_GRAY, Platform::IOS)
     IPAD_AIR_2 ||= Device.new("ipad-air-2", "Apple iPad Air 2", 1, [[1536, 2048], [2048, 1536]], 264, Color::SPACE_GRAY, Platform::IOS, DEVICE_SCREEN_IDS[DisplayType::APP_IPAD_97])
     IPAD_AIR_2019 ||= Device.new("ipad-air-2019", "Apple iPad Air (2019)", 2, [[1668, 2224], [2224, 1668]], 265, Color::SPACE_GRAY, Platform::IOS)
@@ -191,6 +193,7 @@ module Frameit
     # ID and formatted name must be exactly as specified so that device.detect_device() will select this device if the filename includes them
     IPAD_PRO_10_5 ||= Device.new("ipad105", "Apple iPad Pro (10.5-inch)", 1, [[1668, 2224], [2224, 1668]], 265, Color::SPACE_GRAY, Platform::IOS, DEVICE_SCREEN_IDS[DisplayType::APP_IPAD_105])
     IPAD_PRO_11 ||= Device.new("ipadPro11", "Apple iPad Pro (11-inch)", 1, [[1668, 2388], [2388, 1668]], 265, Color::SPACE_GRAY, Platform::IOS, DEVICE_SCREEN_IDS[DisplayType::APP_IPAD_PRO_3GEN_11])
+    IPAD_PRO_13_M4 ||= Device.new("ipad-pro-13-m4", "Apple iPad Pro 13-inch (M4)", 6, [[2752, 2064], [2064, 2752]], 264, Color::SILVER, Platform::IOS)
 
     MAC ||= Device.new("mac", "Apple MacBook", 0, [[1280, 800], [1440, 900], [2560, 1600], [2880, 1800]], nil, Color::SPACE_GRAY, Platform::IOS, DEVICE_SCREEN_IDS[DisplayType::APP_DESKTOP])
 
