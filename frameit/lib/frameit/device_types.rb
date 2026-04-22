@@ -194,6 +194,7 @@ module Frameit
     IPAD_PRO_10_5 ||= Device.new("ipad105", "Apple iPad Pro (10.5-inch)", 1, [[1668, 2224], [2224, 1668]], 265, Color::SPACE_GRAY, Platform::IOS, DEVICE_SCREEN_IDS[DisplayType::APP_IPAD_105])
     IPAD_PRO_11 ||= Device.new("ipadPro11", "Apple iPad Pro (11-inch)", 1, [[1668, 2388], [2388, 1668]], 265, Color::SPACE_GRAY, Platform::IOS, DEVICE_SCREEN_IDS[DisplayType::APP_IPAD_PRO_3GEN_11])
     IPAD_PRO_13_M4 ||= Device.new("ipad-pro-13-m4", "Apple iPad Pro 13-inch (M4)", 6, [[2752, 2064], [2064, 2752]], 264, Color::SILVER, Platform::IOS)
+    IPAD_PRO_13_M5 ||= Device.new("ipad-pro-13-m5", "Apple iPad Pro 13-inch (M5)", 7, [[2752, 2064], [2064, 2752]], 264, Color::SILVER, Platform::IOS)
 
     MAC ||= Device.new("mac", "Apple MacBook", 0, [[1280, 800], [1440, 900], [2560, 1600], [2880, 1800]], nil, Color::SPACE_GRAY, Platform::IOS, DEVICE_SCREEN_IDS[DisplayType::APP_DESKTOP])
 
